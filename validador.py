@@ -10,10 +10,10 @@ with open('solutions.csv', newline='') as csvfile:
 
 #Add the names of the files to validate
 alumnes = [
-    'yabbou',
-    'gcaballe',
-    'jcaballe',
-    'itomas',
+    'abbou',
+    'castellvi',
+    'corral',
+    'pardo',
 ]
 
 for alumne in alumnes:
@@ -49,14 +49,23 @@ for alumne in alumnes:
             #print(f'ans: {ans} and sols: {sols}')
             if ans in sols:
                 correct += 1
+                total += 1
             else:
-                incorrect += 1
-                f.write(f"Camp {key}:\n{ans}\n{sols[0]}\n")
-            
-            total += 1
+                try:
+                    f.write(f"\nCamp {key}:\nAnswer submitted:\t{ans}\nCorrect answer:\t\t{sols[0]}\n")
+                    incorrect += 1
+                    total += 1
+                except IndexError:
+                    a = 1
+                    #f.write(f"\nCamp {key}:\n{ans}\nSENSE SOLUCIÓ \n")
+
+        # Calculate percentage of correct answers
+        percentage_correct = (correct / total) * 100 if total != 0 else 0
+        percentage_incorrect = (incorrect / total) * 100 if total != 0 else 0
+        points_per_question = (100 / total) if total != 0 else 0
 
         # Print results
-        f.write("\nResults:")
-        f.write(f"Total answers:\t{total}")
-        f.write(f"Correct answers:\t{correct}")
-        f.write(f"Incorrect answers:\t{incorrect}")
+        f.write("\nResults:\n")
+        f.write(f"Total answers:\t\t{total} ({points_per_question:.2f} points per question)\n")
+        f.write(f"Correct answers:\t{correct} ({percentage_correct:.2f}%)\n")
+        f.write(f"Incorrect answers:\t{incorrect} ({percentage_incorrect:.2f}%)\n")
